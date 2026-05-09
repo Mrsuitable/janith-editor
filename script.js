@@ -37,27 +37,62 @@ const observer = new IntersectionObserver(
 
 revealItems.forEach((item) => observer.observe(item));
 
-const videoObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      const video = entry.target;
+const pauseVideo = (video) => {
+  if (!video.paused) {
+    video.pause();
+  }
+};
 
-      if (entry.isIntersecting) {
-        const playPromise = video.play();
+const playVideo = (video) => {
+  const playPromise = video.play();
 
-        if (playPromise) {
-          playPromise.catch(() => {
-            video.controls = true;
-          });
-        }
-      } else {
-        video.pause();
-      }
+  if (playPromise) {
+    playPromise.catch(() => {
+      video.controls = true;
     });
-  },
-  { threshold: 0.55 }
-);
+  }
+};
+
+const updateActiveSampleVideo = () => {
+  const viewportCenter = window.innerHeight / 2;
+  let activeVideo = null;
+  let closestDistance = Number.POSITIVE_INFINITY;
+
+  sampleVideos.forEach((video) => {
+    const rect = video.getBoundingClientRect();
+    const isVisible = rect.bottom > window.innerHeight * 0.18 && rect.top < window.innerHeight * 0.82;
+
+    if (!isVisible) {
+      pauseVideo(video);
+      return;
+    }
+
+    const videoCenter = rect.top + rect.height / 2;
+    const distance = Math.abs(viewportCenter - videoCenter);
+
+    if (distance < closestDistance) {
+      closestDistance = distance;
+      activeVideo = video;
+    }
+  });
+
+  sampleVideos.forEach((video) => {
+    if (video === activeVideo) {
+      playVideo(video);
+    } else {
+      pauseVideo(video);
+    }
+  });
+};
+
+const videoObserver = new IntersectionObserver(updateActiveSampleVideo, {
+  rootMargin: "-18% 0px -18% 0px",
+  threshold: [0, 0.25, 0.5, 0.75, 1]
+});
 
 sampleVideos.forEach((video) => videoObserver.observe(video));
 setHeaderState();
 window.addEventListener("scroll", setHeaderState, { passive: true });
+window.addEventListener("scroll", updateActiveSampleVideo, { passive: true });
+window.addEventListener("resize", updateActiveSampleVideo);
+window.addEventListener("load", updateActiveSampleVideo);

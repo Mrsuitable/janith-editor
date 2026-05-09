@@ -358,30 +358,29 @@ h3 {
 }
 
 .samples {
-  padding-bottom: 3rem;
+  padding-bottom: 4rem;
 }
 
-.sample-grid {
+.sample-feed {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 1rem;
+  width: min(520px, 100%);
+  gap: 2rem;
+  margin: 0 auto;
 }
 
 .sample-card {
-  grid-column: span 2;
+  position: relative;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--panel);
-}
-
-.sample-card:nth-child(4),
-.sample-card:nth-child(5) {
-  grid-column: span 3;
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.34);
+  scroll-margin-top: 6rem;
 }
 
 .sample-frame {
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 9 / 16;
+  max-height: min(78svh, 860px);
   background: #050505;
 }
 
@@ -389,7 +388,7 @@ h3 {
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: contain;
+  object-fit: cover;
   background: #050505;
 }
 
@@ -676,15 +675,8 @@ h3 {
   }
 
   .service-grid,
-  .sample-grid,
   .timeline {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .sample-card,
-  .sample-card:nth-child(4),
-  .sample-card:nth-child(5) {
-    grid-column: span 1;
   }
 
   .timeline::before {
@@ -767,9 +759,17 @@ h3 {
   }
 
   .service-grid,
-  .sample-grid,
   .timeline {
     grid-template-columns: 1fr;
+  }
+
+  .sample-feed {
+    width: min(420px, 100%);
+    gap: 1.4rem;
+  }
+
+  .sample-frame {
+    max-height: 76svh;
   }
 
   .service-card,
