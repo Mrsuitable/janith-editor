@@ -7,7 +7,6 @@ One-page portfolio website for Janith Pandey, a video editor working with CapCut
 - `index.html` - main website
 - `styles.css` - visual design and responsive layout
 - `script.js` - navigation and reveal interactions
-- `assets/` - portfolio photos
-- `dist/index.html` - self-contained deploy file with embedded assets
+- `assets/` - portfolio photos and sample videos
 
 Open `index.html` directly in a browser to preview the site locally.
