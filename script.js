@@ -54,7 +54,8 @@ const playVideo = (video) => {
 };
 
 const updateActiveSampleVideo = () => {
-  const viewportCenter = window.innerHeight / 2;
+  const viewportCenterX = window.innerWidth / 2;
+  const viewportCenterY = window.innerHeight / 2;
   let activeVideo = null;
   let closestDistance = Number.POSITIVE_INFINITY;
 
@@ -67,8 +68,9 @@ const updateActiveSampleVideo = () => {
       return;
     }
 
-    const videoCenter = rect.top + rect.height / 2;
-    const distance = Math.abs(viewportCenter - videoCenter);
+    const videoCenterX = rect.left + rect.width / 2;
+    const videoCenterY = rect.top + rect.height / 2;
+    const distance = Math.hypot(viewportCenterX - videoCenterX, viewportCenterY - videoCenterY);
 
     if (distance < closestDistance) {
       closestDistance = distance;
@@ -94,5 +96,6 @@ sampleVideos.forEach((video) => videoObserver.observe(video));
 setHeaderState();
 window.addEventListener("scroll", setHeaderState, { passive: true });
 window.addEventListener("scroll", updateActiveSampleVideo, { passive: true });
+document.querySelector(".sample-feed")?.addEventListener("scroll", updateActiveSampleVideo, { passive: true });
 window.addEventListener("resize", updateActiveSampleVideo);
 window.addEventListener("load", updateActiveSampleVideo);
