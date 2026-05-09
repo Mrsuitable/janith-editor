@@ -362,31 +362,26 @@ h3 {
 }
 
 .sample-feed {
-  display: flex;
-  gap: 1rem;
-  width: 100%;
-  overflow-x: auto;
-  padding: 0.25rem 0 1rem;
-  scroll-snap-type: x proximity;
-  scrollbar-color: rgba(245, 242, 235, 0.28) transparent;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: min(980px, 100%);
+  gap: 1.1rem;
+  margin: 0 auto;
 }
 
 .sample-card {
-  flex: 1 1 0;
-  min-width: 150px;
   position: relative;
   overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--panel);
-  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   scroll-margin-top: 6rem;
-  scroll-snap-align: center;
 }
 
 .sample-frame {
   aspect-ratio: 9 / 16;
-  height: clamp(220px, 26vw, 340px);
+  height: clamp(300px, 34vw, 460px);
   background: #050505;
 }
 
@@ -770,19 +765,11 @@ h3 {
   }
 
   .sample-feed {
-    gap: 0.8rem;
-    margin-inline: -1rem;
-    padding-inline: 1rem;
-  }
-
-  .sample-card {
-    flex: 0 0 42vw;
-    min-width: 155px;
-    max-width: 190px;
+    gap: 0.55rem;
   }
 
   .sample-frame {
-    height: clamp(230px, 66vw, 315px);
+    height: clamp(170px, 46vw, 260px);
   }
 
   .service-card,
